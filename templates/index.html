@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Copyright Transfer Form</title>
+</head>
+<body>
+  <h1>Copyright Transfer Agreement</h1>
+
+  <p><strong>Manuscript Title:</strong> {{ title }}</p>
+
+  <p>
+    The undersigned hereby transfers to the publisher the copyright to the above-titled manuscript. 
+    This transfer includes all rights to publish, reproduce, and distribute the work in any medium, now and in the future.
+  </p>
+
+  <form method="post">
+    <label for="author_name">Author Name:</label><br>
+    <input type="text" id="author_name" name="author_name" required><br><br>
+
+    <label for="affiliation">Affiliation:</label><br>
+    <input type="text" id="affiliation" name="affiliation" required><br><br>
+
+    <label for="address">Address:</label><br>
+    <input type="text" id="address" name="address" required><br><br>
+
+    <label for="date">Date:</label><br>
+    <input type="date" id="date" name="date" required><br><br>
+
+    <button type="submit">Sign and Generate Files</button>
+  </form>
+
+  {% if pdf_path %}
+    <h2>Generated Files</h2>
+    <ul>
+      <li><a href="{{ url_for('download', filename=pdf_path) }}">Download Copyright Transfer PDF</a></li>
+      <li><a href="{{ url_for('download', filename=cert_path) }}">Download Certificate (Public Key)</a></li>
+      <li><a href="{{ url_for('download', filename=sig_path) }}">Download Signature File</a></li>
+      <li><a href="{{ url_for('download', filename=priv_path) }}">Download Your Private Key</a></li>
+    </ul>
+    <p><strong>SHA-256 Hash:</strong> {{ hash_value }}</p>
+    <p>Please send the first three files via email to the publisher.</p>
+  {% endif %}
+
+  {% if error %}
+    <p style="color: red;"><strong>Error:</strong> {{ error }}</p>
+  {% endif %}
+</body>
+</html>
